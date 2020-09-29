@@ -33,7 +33,8 @@
 			}
 			textarea {
 				resize: vertical;
-				min-height: 5em;
+				min-height: 3em;
+				font-size: 3em;
 			}
 			button {
 				margin-top: 1em;
@@ -72,5 +73,29 @@
 				<button type="submit">Zobrazit</button>
 			</form>
 		</main>
+		<script>
+			const STORAGE_KEY = 'last-data'
+			const $form = document.querySelector('form')
+			$form.addEventListener('submit', (event) => {
+				const formData = new FormData($form)
+				const data = {}
+				for (let [name, value] of formData.entries()) {
+					data[name] = value
+				}
+				localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+			})
+
+			try {
+				const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}
+				for (let [name, value] of Object.entries(data)) {
+					const $field = $form.querySelector(`[name="${name}"]`)
+					if (!$field.value) {
+						$field.value = value
+					}
+				}
+			} catch (error) {
+				console.error(error)
+			}
+		</script>
 	</body>
 </html>
