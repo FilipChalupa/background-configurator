@@ -107,6 +107,15 @@
 			const $form = document.querySelector('form')
 			const $preview = document.querySelector('#preview')
 
+			const persistFormData = () => {
+				const formData = new FormData($form)
+				const data = {}
+				for (let [name, value] of formData.entries()) {
+					data[name] = value
+				}
+				localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+			}
+
 			const updatePreview = () => {
 				const formData = new FormData($form)
 				const parameters = [...formData.entries()]
@@ -118,21 +127,17 @@
 				)
 			}
 
-			$form.addEventListener('submit', (event) => {
-				const formData = new FormData($form)
-				const data = {}
-				for (let [name, value] of formData.entries()) {
-					data[name] = value
-				}
-				localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
-			})
+			$form.addEventListener('submit', persistFormData)
 			$form.addEventListener(
 				'input',
 				(() => {
 					let timer
 					return (event) => {
 						clearTimeout(timer)
-						timer = setTimeout(updatePreview, 500)
+						timer = setTimeout(() => {
+							updatePreview()
+							persistFormData()
+						}, 500)
 					}
 				})(),
 			)
