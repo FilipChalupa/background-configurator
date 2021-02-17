@@ -10,6 +10,11 @@
 			*::after {
 				box-sizing: border-box;
 			}
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+				}
+			}
 			body {
 				margin: 0;
 				background-color: #000000;
@@ -20,6 +25,7 @@
 				flex-direction: column;
 				align-items: center;
 				overflow: hidden;
+				animation: fadeIn 0.2s;
 			}
 			.frame {
 				position: relative;
