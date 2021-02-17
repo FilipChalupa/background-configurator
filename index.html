@@ -39,11 +39,36 @@
 			button {
 				margin-top: 1em;
 			}
+			.preview {
+				position: relative;
+				margin-bottom: 2em;
+				overflow: hidden;
+			}
+			.preview::before {
+				content: '';
+				display: block;
+				padding-top: calc(100% / (16 / 9));
+			}
+			.preview-in {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				border: none;
+			}
 		</style>
 	</head>
 	<body>
 		<main class="main">
 			<h1>Czechitas konfigurátor stream scén</h1>
+			<div class="preview">
+				<iframe
+					src="scena.html?title=Náhled"
+					class="preview-in"
+					id="preview"
+				></iframe>
+			</div>
 			<form action="scena.html">
 				<label>
 					Nadpis:
@@ -76,6 +101,7 @@
 		<script>
 			const STORAGE_KEY = 'last-data'
 			const $form = document.querySelector('form')
+			const $preview = document.querySelector('#preview')
 			$form.addEventListener('submit', (event) => {
 				const formData = new FormData($form)
 				const data = {}
@@ -84,6 +110,28 @@
 				}
 				localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
 			})
+			$form.addEventListener(
+				'input',
+				(() => {
+					let timer
+					return (event) => {
+						clearTimeout(timer)
+						timer = setTimeout(() => {
+							const formData = new FormData($form)
+							const parameters = [...formData.entries()]
+								.map(
+									(x) =>
+										`${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`,
+								)
+								.join('&')
+							$preview.setAttribute(
+								'src',
+								`${$form.getAttribute('action')}?${parameters}`,
+							)
+						}, 500)
+					}
+				})(),
+			)
 
 			try {
 				const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}
