@@ -63,11 +63,7 @@
 		<main class="main">
 			<h1>Czechitas konfigurátor stream scén</h1>
 			<div class="preview">
-				<iframe
-					src="scena.html?title=Náhled"
-					class="preview-in"
-					id="preview"
-				></iframe>
+				<iframe src="" class="preview-in" id="preview"></iframe>
 			</div>
 			<form action="scena.html">
 				<label>
@@ -110,6 +106,18 @@
 			const STORAGE_KEY = 'last-data'
 			const $form = document.querySelector('form')
 			const $preview = document.querySelector('#preview')
+
+			const updatePreview = () => {
+				const formData = new FormData($form)
+				const parameters = [...formData.entries()]
+					.map((x) => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+					.join('&')
+				$preview.setAttribute(
+					'src',
+					`${$form.getAttribute('action')}?${parameters}`,
+				)
+			}
+
 			$form.addEventListener('submit', (event) => {
 				const formData = new FormData($form)
 				const data = {}
@@ -124,19 +132,7 @@
 					let timer
 					return (event) => {
 						clearTimeout(timer)
-						timer = setTimeout(() => {
-							const formData = new FormData($form)
-							const parameters = [...formData.entries()]
-								.map(
-									(x) =>
-										`${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`,
-								)
-								.join('&')
-							$preview.setAttribute(
-								'src',
-								`${$form.getAttribute('action')}?${parameters}`,
-							)
-						}, 500)
+						timer = setTimeout(updatePreview, 500)
 					}
 				})(),
 			)
@@ -152,6 +148,7 @@
 			} catch (error) {
 				console.error(error)
 			}
+			updatePreview()
 		</script>
 	</body>
 </html>
