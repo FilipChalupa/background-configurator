@@ -27,7 +27,7 @@
 				margin-top: 1.5em;
 			}
 			textarea,
-			input,
+			input:not([type='checkbox']),
 			button {
 				width: 100%;
 				font-size: 2em;
@@ -100,7 +100,11 @@
 						placeholder="https://placekitten.com/400/400"
 					/>
 				</label>
-				<button type="submit">Zobrazit</button>
+				<button type="submit">Zobrazit výsledek</button>
+				<p>
+					Doporučená velikost okna je 16:9 (1920x1080 pixelů). Jiné formáty
+					mohou vést k ořezům z levé a pravé strany.
+				</p>
 			</form>
 		</main>
 		<script>
