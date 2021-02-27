@@ -73,17 +73,17 @@
 					<textarea name="title" placeholder="Web od A do Z"></textarea>
 				</label>
 				<label>
-					Meta 1:
+					Řádek 1:
 					<br />
 					<input name="meta1" autocomplete="name" placeholder="Filip Chalupa" />
 				</label>
 				<label>
-					Meta 2:
+					Řádek 2:
 					<br />
 					<input name="meta2" placeholder="18. 2. 2021" />
 				</label>
 				<label>
-					Meta 3:
+					Řádek 3:
 					<br />
 					<input
 						name="meta3"
@@ -99,6 +99,11 @@
 						name="icon"
 						placeholder="https://placekitten.com/400/400"
 					/>
+				</label>
+				<label>
+					Zobrazit čas:
+					<br />
+					<input type="checkbox" name="time" />
 				</label>
 				<button type="submit">Zobrazit výsledek</button>
 				<p>
@@ -138,10 +143,10 @@
 				(() => {
 					let timer
 					return (event) => {
+						persistFormData()
 						clearTimeout(timer)
 						timer = setTimeout(() => {
 							updatePreview()
-							persistFormData()
 						}, 500)
 					}
 				})(),
@@ -151,7 +156,9 @@
 				const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}
 				for (let [name, value] of Object.entries(data)) {
 					const $field = $form.querySelector(`[name="${name}"]`)
-					if (!$field.value) {
+					if ($field.type === 'checkbox') {
+						$field.checked = true
+					} else if (!$field.value) {
 						$field.value = value
 					}
 				}
