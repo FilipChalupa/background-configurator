@@ -46,11 +46,11 @@
 			import { renderer } from './renderer.js'
 
 			const urlParameters = new URLSearchParams(window.location.search)
-			const title = urlParameters.get('title')
-			const meta1 = urlParameters.get('meta1')
-			const meta2 = urlParameters.get('meta2')
-			const meta3 = urlParameters.get('meta3')
-			const icon = urlParameters.get('icon')
+			const title = urlParameters.get('title') ?? undefined
+			const meta1 = urlParameters.get('meta1') ?? undefined
+			const meta2 = urlParameters.get('meta2') ?? undefined
+			const meta3 = urlParameters.get('meta3') ?? undefined
+			const icon = urlParameters.get('icon') ?? undefined
 
 			const $canvas = document.querySelector('#canvas')
 			const { render } = renderer($canvas)
