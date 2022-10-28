@@ -91,7 +91,7 @@
 		<main class="main">
 			<h1>Czechitas konfigurátor intro slidu</h1>
 			<div class="preview">
-				<canvas class="preview-in" id="preview"></canvas>
+				<img class="preview-in" id="preview" />
 			</div>
 			<form action="slide.html">
 				<label>
@@ -156,7 +156,8 @@
 			const $form = document.querySelector('form')
 			const $preview = document.querySelector('#preview')
 			const $download = document.querySelector('#download')
-			const { render } = renderer($preview, (url) => {
+			const { render } = renderer((url) => {
+				$preview.src = url
 				$download.href = url
 			})
 

@@ -1,4 +1,8 @@
-export const renderer = ($canvas, onUrlChange = () => {}) => {
+export const renderer = (onUrlChange) => {
+	const $canvas = document.createElement('canvas')
+	$canvas.style.display = 'none'
+	document.body.appendChild($canvas)
+
 	const width = 1920
 	const height = 1080
 	$canvas.width = width

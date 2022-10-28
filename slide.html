@@ -28,7 +28,7 @@
 				background-color: #000000;
 				animation: fadeIn 0.2s;
 			}
-			canvas {
+			img {
 				position: fixed;
 				top: 0;
 				left: 0;
@@ -41,7 +41,7 @@
 		</style>
 	</head>
 	<body>
-		<canvas id="canvas"></canvas>
+		<img id="output" />
 		<script type="module">
 			import { renderer } from './renderer.js'
 
@@ -52,8 +52,10 @@
 			const meta3 = urlParameters.get('meta3') ?? undefined
 			const icon = urlParameters.get('icon') ?? undefined
 
-			const $canvas = document.querySelector('#canvas')
-			const { render } = renderer($canvas)
+			const $output = document.querySelector('#output')
+			const { render } = renderer((url) => {
+				$output.src = url
+			})
 			render({
 				title,
 				meta1,
