@@ -30,6 +30,10 @@
 			label + label {
 				margin-top: 1.5em;
 			}
+			label {
+				display: grid;
+				row-gap: 0.3em;
+			}
 			textarea,
 			input:not([type='checkbox']),
 			button {
@@ -43,6 +47,7 @@
 			}
 			button {
 				margin-top: 1em;
+				padding: 0.1em 1em;
 			}
 			h1,
 			.note {
@@ -66,33 +71,37 @@
 				height: 100%;
 				border: none;
 			}
+			.actions {
+				display: grid;
+				grid-template-columns: 1fr auto;
+				column-gap: 0.5em;
+			}
+			.actions a {
+				text-decoration: none;
+			}
 		</style>
 	</head>
 	<body>
 		<main class="main">
 			<h1>Czechitas konfigurátor slidu</h1>
 			<div class="preview">
-				<iframe src="" class="preview-in" id="preview"></iframe>
+				<canvas class="preview-in" id="preview"></canvas>
 			</div>
 			<form action="slide.html">
 				<label>
 					Nadpis:
-					<br />
 					<textarea name="title" placeholder="Úvod do HTML a CSS"></textarea>
 				</label>
 				<label>
 					Řádek 1:
-					<br />
 					<input name="meta1" autocomplete="name" placeholder="Filip Chalupa" />
 				</label>
 				<label>
 					Řádek 2:
-					<br />
 					<input name="meta2" placeholder="18. 2. 2021" />
 				</label>
 				<label>
 					Řádek 3:
-					<br />
 					<input
 						name="meta3"
 						autocomplete="address-level2"
@@ -101,24 +110,46 @@
 				</label>
 				<label>
 					Icon url:
-					<br />
 					<input
 						type="url"
 						name="icon"
 						placeholder="https://placekitten.com/400/400"
 					/>
 				</label>
-				<button type="submit">Zobrazit výsledek</button>
+				<div class="actions">
+					<button type="submit">Zobrazit výsledek</button>
+					<a id="download" download="thumbnail.png">
+						<button type="button">
+							Stáhnout
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+							>
+								<path
+									d="M15.003 3h2.997v5h-2.997v-5zm8.997 1v20h-24v-24h20l4 4zm-19 5h14v-7h-14v7zm16 4h-18v9h18v-9z"
+									fill="currentColor"
+								/>
+							</svg>
+						</button>
+					</a>
+				</div>
 				<p class="note">
-					Doporučená velikost okna je 16:9 (1920x1080 pixelů). Jiné formáty
-					mohou vést k ořezům z levé a pravé strany.
+					Doporučená velikost okna pro zobrazení výsledku je 16:9 (1920x1080
+					pixelů). Jiné formáty mohou vést k černým pruhům po stranách.
 				</p>
 			</form>
 		</main>
-		<script>
+		<script type="module">
+			import { renderer } from './renderer.js'
 			const STORAGE_KEY = 'last-data'
 			const $form = document.querySelector('form')
 			const $preview = document.querySelector('#preview')
+			const $download = document.querySelector('#download')
+			const { render } = renderer($preview, (url) => {
+				$download.href = url
+			})
 
 			const persistFormData = () => {
 				const formData = new FormData($form)
@@ -131,13 +162,8 @@
 
 			const updatePreview = () => {
 				const formData = new FormData($form)
-				const parameters = [...formData.entries()]
-					.map((x) => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
-					.join('&')
-				$preview.setAttribute(
-					'src',
-					`${$form.getAttribute('action')}?${parameters}`,
-				)
+				const parameters = Object.fromEntries(formData.entries())
+				render(parameters)
 			}
 
 			$form.addEventListener('submit', persistFormData)

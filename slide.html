@@ -10,7 +10,7 @@
 			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
 			rel="stylesheet"
 		/>
-		<meta name="color-scheme" content="light only" />
+		<meta name="color-scheme" content="dark only" />
 		<meta name="theme-color" content="#000000" />
 		<link rel="manifest" href="webmanifest.json" />
 		<style>
@@ -25,71 +25,11 @@
 				}
 			}
 			body {
-				margin: 0;
 				background-color: #000000;
-				color: #ffffff;
-				font-family: 'Open Sans', sans-serif;
-				line-height: 1.2;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				overflow: hidden;
 				animation: fadeIn 0.2s;
 			}
-			.frame {
-				position: relative;
-				background-image: url('background.jpg');
-				background-size: cover;
-				font-size: 1vh;
-				height: 100em;
-				width: calc(100em * (16 / 9));
-				overflow: hidden;
-				padding: 9em;
-			}
-			.frame-in {
-				height: 100%;
-				display: flex;
-				flex-direction: column;
-			}
-			.title {
-				display: flex;
-				align-items: flex-end;
-				flex-basis: 25.9em;
-				margin-right: 22.9em;
-				line-height: 1.15;
-				text-transform: uppercase;
-			}
-			.title-in {
-				font-size: 4.5em;
-			}
-			.meta {
-				margin-top: -0.4em;
-				margin-right: 70.8em;
-				flex-grow: 1;
-			}
-			.meta-in {
-				font-size: 4.22em;
-				line-height: 1.65;
-			}
-			.meta1,
-			.meta2,
-			.meta3 {
-				min-height: 1.65em;
-			}
-			.icon {
-				width: 40em;
-				overflow: hidden;
-				position: absolute;
-				right: 9em;
-				bottom: 9em;
-			}
-			.icon::before {
-				content: '';
-				display: block;
-				padding-top: 100%;
-			}
-			.icon-in {
-				position: absolute;
+			canvas {
+				position: fixed;
 				top: 0;
 				left: 0;
 				right: 0;
@@ -101,28 +41,10 @@
 		</style>
 	</head>
 	<body>
-		<div class="frame">
-			<div class="frame-in">
-				<h1 class="title">
-					<span class="title-in"></span>
-				</h1>
-				<div class="meta">
-					<div class="meta-in">
-						<div class="meta1"></div>
-						<div class="meta2"></div>
-						<div class="meta3"></div>
-					</div>
-				</div>
-				<div class="icon">
-					<img
-						src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
-						alt="ikona"
-						class="icon-in"
-					/>
-				</div>
-			</div>
-		</div>
-		<script>
+		<canvas id="canvas"></canvas>
+		<script type="module">
+			import { renderer } from './renderer.js'
+
 			const urlParameters = new URLSearchParams(window.location.search)
 			const title = urlParameters.get('title')
 			const meta1 = urlParameters.get('meta1')
@@ -130,19 +52,8 @@
 			const meta3 = urlParameters.get('meta3')
 			const icon = urlParameters.get('icon')
 
-			const $title = document.querySelector('.title-in')
-			const $meta1 = document.querySelector('.meta1')
-			const $meta2 = document.querySelector('.meta2')
-			const $meta3 = document.querySelector('.meta3')
-			const $icon = document.querySelector('.icon-in')
-
-			$title.innerText = title
-			$meta1.innerText = meta1
-			$meta2.innerText = meta2
-			$meta3.innerText = meta3
-			if (icon) {
-				$icon.src = icon
-			}
+			const $canvas = document.querySelector('#canvas')
+			const { render } = renderer($canvas)
 		</script>
 	</body>
 </html>
