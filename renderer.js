@@ -5,13 +5,15 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 	$canvas.height = height
 	const fontFamily = 'Open Sans'
 	const context = $canvas.getContext('2d')
-	const background = new Image(width, height)
+	const iconImage = new Image()
+	iconImage.crossOrigin = 'anonymous'
+	const backgroundImage = new Image(width, height)
+	backgroundImage.src = 'background.jpg'
 	let parameters = {}
 
-	background.addEventListener('load', () => {
+	backgroundImage.addEventListener('load', () => {
 		render(parameters)
 	})
-	background.src = 'background.jpg'
 
 	document.fonts.ready.then(function () {
 		if (document.fonts.check(`1em ${fontFamily}`)) {
@@ -25,27 +27,59 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 		} ${size}px ${fontFamily}, sans-serif`
 	}
 
+	const isImageLoaded = (image) => image.complete && image.naturalHeight !== 0
+
 	const render = ({
 		title = '',
 		meta1 = '',
 		meta2 = '',
 		meta3 = '',
-		iconUrl = '',
+		icon = '',
 	}) => {
 		parameters = {
 			title,
 			meta1,
 			meta2,
 			meta3,
-			iconUrl,
+			icon,
 		}
+		if (iconImage.src !== icon) {
+			iconImage.addEventListener(
+				'load',
+				() => {
+					render(parameters)
+				},
+				{ once: true },
+			)
+			iconImage.src = icon
+		}
+
 		context.fillStyle = '#222262'
 		context.fillRect(0, 0, width, height)
 
-		const isBackgroundLoaded =
-			background.complete && background.naturalHeight !== 0
-		if (isBackgroundLoaded) {
-			context.drawImage(background, 0, 0)
+		if (isImageLoaded(backgroundImage)) {
+			context.drawImage(backgroundImage, 0, 0)
+		}
+
+		if (isImageLoaded(iconImage)) {
+			const frameWidth = 432
+			const frameHeight = 432
+			const top = 551
+			const left = 1391
+
+			const scale = Math.min(
+				frameWidth / iconImage.width,
+				frameHeight / iconImage.height,
+			)
+			const imageWidth = scale * iconImage.width
+			const imageHeight = scale * iconImage.height
+			context.drawImage(
+				iconImage,
+				left + (frameWidth - imageWidth) / 2,
+				top + (frameHeight - imageHeight) / 2,
+				imageWidth,
+				imageHeight,
+			)
 		}
 
 		context.fillStyle = '#ffffff'
@@ -56,7 +90,7 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 			.split('\n')
 			.forEach((line, i, lines) => {
 				const lineHeight = 112
-				context.fillText(line, 99, 652 - (lines.length - i - 1) * lineHeight) // @TODO multiline
+				context.fillText(line, 99, 652 - (lines.length - i - 1) * lineHeight)
 			})
 		setFont(46, false)
 		context.fillText(meta1, 99, 740)
@@ -71,6 +105,4 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 	}
 }
 
-// @TODO: zobrazit ikonku
-// @TODO: podpora pro multiline title
-// @TODO: překontrolovat jednotné zarovnání k levé hraně
+// @TODO: handle icon CORS
