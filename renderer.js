@@ -51,7 +51,13 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 		context.fillStyle = '#ffffff'
 
 		setFont(94, true)
-		context.fillText(title.toLocaleUpperCase('cs'), 99, 652) // @TODO multiline
+		title
+			.toLocaleUpperCase('cs')
+			.split('\n')
+			.forEach((line, i, lines) => {
+				const lineHeight = 112
+				context.fillText(line, 99, 652 - (lines.length - i - 1) * lineHeight) // @TODO multiline
+			})
 		setFont(46, false)
 		context.fillText(meta1, 99, 740)
 		context.fillText(meta2, 99, 814)
