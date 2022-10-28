@@ -108,11 +108,6 @@
 						placeholder="https://placekitten.com/400/400"
 					/>
 				</label>
-				<label>
-					Zobrazit čas:
-					<br />
-					<input type="checkbox" name="time" />
-				</label>
 				<button type="submit">Zobrazit výsledek</button>
 				<p class="note">
 					Doporučená velikost okna je 16:9 (1920x1080 pixelů). Jiné formáty
@@ -164,6 +159,9 @@
 				const data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}
 				for (let [name, value] of Object.entries(data)) {
 					const $field = $form.querySelector(`[name="${name}"]`)
+					if ($field === null) {
+						continue
+					}
 					if ($field.type === 'checkbox') {
 						$field.checked = true
 					} else if (!$field.value) {

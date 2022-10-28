@@ -98,10 +98,6 @@
 				height: 100%;
 				object-fit: contain;
 			}
-			.time {
-				line-height: 1;
-				font-size: 3em;
-			}
 		</style>
 	</head>
 	<body>
@@ -124,7 +120,6 @@
 						class="icon-in"
 					/>
 				</div>
-				<div class="time"></div>
 			</div>
 		</div>
 		<script>
@@ -134,7 +129,6 @@
 			const meta2 = urlParameters.get('meta2')
 			const meta3 = urlParameters.get('meta3')
 			const icon = urlParameters.get('icon')
-			const time = urlParameters.get('time')
 
 			const $title = document.querySelector('.title-in')
 			const $meta1 = document.querySelector('.meta1')
@@ -148,29 +142,6 @@
 			$meta3.innerText = meta3
 			if (icon) {
 				$icon.src = icon
-			}
-			if (time !== null) {
-				const $time = document.querySelector('.time')
-
-				function twoDigits(input) {
-					return input.toString().padStart(2, '0')
-				}
-
-				function updateTime() {
-					const now = new Date()
-					$time.innerText = `${twoDigits(now.getHours())}:${twoDigits(
-						now.getMinutes(),
-					)}${`:${twoDigits(now.getSeconds())}`}`
-				}
-
-				function loop() {
-					updateTime()
-					const now = new Date()
-					const nextTick = Math.max(1, 1000 - (now.getTime() % 1000))
-					setTimeout(loop, nextTick)
-				}
-
-				loop()
 			}
 		</script>
 	</body>
