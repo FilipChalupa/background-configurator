@@ -3,6 +3,7 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 	const height = 1080
 	$canvas.width = width
 	$canvas.height = height
+	const fontFamily = 'Open Sans'
 	const context = $canvas.getContext('2d')
 	const background = new Image(width, height)
 	let parameters = {}
@@ -11,6 +12,18 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 		render(parameters)
 	})
 	background.src = 'background.jpg'
+
+	document.fonts.ready.then(function () {
+		if (document.fonts.check(`1em ${fontFamily}`)) {
+			render(parameters)
+		}
+	})
+
+	const setFont = (size, isBold) => {
+		context.font = `${
+			isBold ? 'bold' : 'normal'
+		} ${size}px ${fontFamily}, sans-serif`
+	}
 
 	const render = ({
 		title = '',
@@ -35,6 +48,15 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 			context.drawImage(background, 0, 0)
 		}
 
+		context.fillStyle = '#ffffff'
+
+		setFont(94, true)
+		context.fillText(title.toLocaleUpperCase('cs'), 99, 652) // @TODO multiline
+		setFont(46, false)
+		context.fillText(meta1, 99, 740)
+		context.fillText(meta2, 99, 814)
+		context.fillText(meta3, 99, 890)
+
 		onUrlChange($canvas.toDataURL('image/png'))
 	}
 
@@ -42,3 +64,7 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 		render,
 	}
 }
+
+// @TODO: ověřit, jestli funguje Open Sans font
+// @TODO: zobrazit ikonku
+// @TODO: podpora pro multiline title
