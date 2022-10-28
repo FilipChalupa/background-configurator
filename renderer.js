@@ -68,3 +68,4 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 // @TODO: ověřit, jestli funguje Open Sans font
 // @TODO: zobrazit ikonku
 // @TODO: podpora pro multiline title
+// @TODO: překontrolovat jednotné zarovnání k levé hraně
