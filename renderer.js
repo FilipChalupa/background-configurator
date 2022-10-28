@@ -57,7 +57,7 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 		context.fillText(meta2, 99, 814)
 		context.fillText(meta3, 99, 890)
 
-		onUrlChange($canvas.toDataURL('image/png'))
+		onUrlChange($canvas.toDataURL('image/jpeg'))
 	}
 
 	return {
