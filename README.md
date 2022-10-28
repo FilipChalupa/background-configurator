@@ -1,6 +1,6 @@
 # Konfigurátor intro slidu
 
-Nástroj pro vytváření úvodního Czechitas slidu v poměru 16:9 (1920×1080 pixelů). Výsledek je vhodný například pro použití jako thumbnail, náhledový obrázek u YouTube videí.
+Nástroj pro vytváření úvodního Czechitas slidu v poměru 16:9 (1920×1080 pixelů). Výsledek je vhodný například pro použití jako thumbnail, náhledový obrázek u YouTube videí nebo pozadí projekční plochy na akci.
 
 Konfigurátor: [intro.czechitas-podklady.cz](https://intro.czechitas-podklady.cz/)
 
