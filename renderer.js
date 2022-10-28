@@ -61,25 +61,30 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 			context.drawImage(backgroundImage, 0, 0)
 		}
 
-		if (isImageLoaded(iconImage)) {
+		if (icon) {
 			const frameWidth = 432
 			const frameHeight = 432
 			const top = 551
 			const left = 1391
 
-			const scale = Math.min(
-				frameWidth / iconImage.width,
-				frameHeight / iconImage.height,
-			)
-			const imageWidth = scale * iconImage.width
-			const imageHeight = scale * iconImage.height
-			context.drawImage(
-				iconImage,
-				left + (frameWidth - imageWidth) / 2,
-				top + (frameHeight - imageHeight) / 2,
-				imageWidth,
-				imageHeight,
-			)
+			if (isImageLoaded(iconImage)) {
+				const scale = Math.min(
+					frameWidth / iconImage.width,
+					frameHeight / iconImage.height,
+				)
+				const imageWidth = scale * iconImage.width
+				const imageHeight = scale * iconImage.height
+				context.drawImage(
+					iconImage,
+					left + (frameWidth - imageWidth) / 2,
+					top + (frameHeight - imageHeight) / 2,
+					imageWidth,
+					imageHeight,
+				)
+			} else {
+				context.fillStyle = '#ff000044'
+				context.fillRect(left, top, frameWidth, frameHeight)
+			}
 		}
 
 		context.fillStyle = '#ffffff'
@@ -104,5 +109,3 @@ export const renderer = ($canvas, onUrlChange = () => {}) => {
 		render,
 	}
 }
-
-// @TODO: handle icon CORS
