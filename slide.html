@@ -10,7 +10,7 @@
 			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
 			rel="stylesheet"
 		/>
-		<meta name="color-scheme" content="dark only" />
+		<meta name="color-scheme" content="light dark" />
 		<meta name="theme-color" content="#000000" />
 		<link rel="manifest" href="webmanifest.json" />
 		<meta property="og:image:width" content="1200" />
@@ -19,56 +19,12 @@
 			property="og:image"
 			content="https://intro.czechitas-podklady.cz/og-image.jpg"
 		/>
-		<style>
-			*,
-			*::before,
-			*::after {
-				box-sizing: border-box;
-			}
-			@keyframes fadeIn {
-				from {
-					opacity: 0;
-				}
-			}
-			body {
-				background-color: #000000;
-				animation: fadeIn 0.2s;
-			}
-			img {
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				width: 100%;
-				height: 100%;
-				object-fit: contain;
-			}
-		</style>
+		<script src="main.js" type="module"></script>
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
-		<img id="output" />
-		<script type="module">
-			import { renderer } from './renderer.js'
-
-			const urlParameters = new URLSearchParams(window.location.search)
-			const title = urlParameters.get('title') ?? undefined
-			const meta1 = urlParameters.get('meta1') ?? undefined
-			const meta2 = urlParameters.get('meta2') ?? undefined
-			const meta3 = urlParameters.get('meta3') ?? undefined
-			const icon = urlParameters.get('icon') ?? undefined
-
-			const $output = document.querySelector('#output')
-			const { render } = renderer((url) => {
-				$output.src = url
-			})
-			render({
-				title,
-				meta1,
-				meta2,
-				meta3,
-				icon,
-			})
-		</script>
+		<div id="output-page">
+			<img id="output" />
+		</div>
 	</body>
 </html>
