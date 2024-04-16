@@ -40,10 +40,6 @@ if (document.startViewTransition) {
 const runOutputPage = () => {
 	const urlParameters = new URLSearchParams(window.location.search)
 	const title = urlParameters.get('title') ?? undefined
-	const meta1 = urlParameters.get('meta1') ?? undefined
-	const meta2 = urlParameters.get('meta2') ?? undefined
-	const meta3 = urlParameters.get('meta3') ?? undefined
-	const icon = urlParameters.get('icon') ?? undefined
 
 	const $output = document.querySelector('#output')
 	const { render } = renderer((url) => {
@@ -51,10 +47,6 @@ const runOutputPage = () => {
 	})
 	render({
 		title,
-		meta1,
-		meta2,
-		meta3,
-		icon,
 	})
 }
 

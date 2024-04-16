@@ -3,74 +3,36 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Konfigurátor</title>
-		<meta name="description" content="Konfigurátor úvodního slidu Czechitas." />
-		<link rel="shortcut icon" href="icons/icon-48x48.png" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<title>KiloMayo background configurator</title>
+		<meta name="description" content="Configure your own background image." />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
 			rel="stylesheet"
 		/>
 		<meta name="color-scheme" content="light dark" />
 		<meta name="theme-color" content="#000000" />
-		<link rel="manifest" href="webmanifest.json" />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta
-			property="og:image"
-			content="https://intro.czechitas-podklady.cz/og-image.jpg"
-		/>
 		<script src="main.js" type="module"></script>
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
 		<div id="main-page">
 			<main class="main">
-				<h1>Czechitas konfigurátor intro slidu</h1>
+				<h1>KiloMayo background configurator</h1>
 				<div class="preview">
 					<img class="preview-in" id="preview" />
 				</div>
 				<form action="slide.html">
 					<label>
-						Nadpis:
-						<textarea name="title" placeholder="Úvod do HTML a CSS"></textarea>
-					</label>
-					<label>
-						Řádek 1:
-						<input
-							name="meta1"
-							autocomplete="name"
-							placeholder="Filip Chalupa"
-						/>
-					</label>
-					<label>
-						Řádek 2:
-						<input name="meta2" placeholder="18. 2. 2021" />
-					</label>
-					<label>
-						Řádek 3:
-						<input
-							name="meta3"
-							autocomplete="address-level2"
-							placeholder="Praha"
-						/>
-					</label>
-					<label>
-						<span>
-							URL ikony:
-							<small>(server s obrázkem musí umožňovat vkládání)</small>
-						</span>
-						<input
-							type="url"
-							name="icon"
-							placeholder="https://placekitten.com/400/400"
-						/>
+						Title:
+						<textarea name="title" placeholder="Goodlok"></textarea>
 					</label>
 					<div class="actions">
-						<button type="submit">Zobrazit výsledek</button>
+						<button type="submit">Show</button>
 						<a id="download" download="thumbnail.png">
 							<button type="button">
-								Stáhnout
+								Download
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="24"
@@ -85,10 +47,6 @@
 							</button>
 						</a>
 					</div>
-					<p class="note">
-						Doporučená velikost okna pro zobrazení výsledku je 16:9 (1920x1080
-						pixelů). Jiné formáty mohou vést k černým pruhům po stranách.
-					</p>
 				</form>
 			</main>
 		</div>
